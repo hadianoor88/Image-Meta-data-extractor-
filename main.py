@@ -1,3 +1,4 @@
+#day4  Adding csv loading 
 import exifread
 import os
 import csv
