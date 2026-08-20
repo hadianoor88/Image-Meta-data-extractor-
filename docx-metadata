@@ -1,0 +1,45 @@
+#Goal: Read metadata from Word (.docx) files, just like we did for images and PDFs.
+  from docx import Document # Importing the needed library 
+  #Now the Document is a function that comes from the library docx 
+ # When you call Document("test.docx"), this is what happens inside:
+#It looks for a file called test.docx on your computer
+#It opens that file
+#It reads the file structure (Word documents are actually ZIP files with XML inside)
+#It extracts all the content and metadata
+#It creates a Document Object that contains everything
+#It returns that Document Object
+ doc = Document("testing.docx") 
+#doc is a variable that holds the Document object 
+#And it can be used to get information of the testing document 
+#Then..
+core_props = doc.core_properties
+#core_props stores all the metadata , that is gotten by the doc.core_properties
+#It holds the author, title, created, modified etc.
+#author = core_props.author
+#print("Author:", author)
+ #To get the author
+if core_props.author:
+    author = core_props.author
+else:
+    author = "Unknown"
+
+if core_props.title:
+    title = core_props.title
+else:
+    title = "Unknown"
+
+if core_props.created:
+    created = core_props.created
+else:
+    created = "Unknown"
+
+print("Author:", author)
+print("Title:", title)
+print("Created:", created)
+
+
+  
+
+  
+  
+  
