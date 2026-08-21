@@ -1,38 +1,43 @@
-#Now for batch processing 
-import os #For dealing with files and folders
-folder="."
-all_files= os.listdir(folder)
+#Exporting to csv for better readability. 
+import os
+import csv
+from docx import Document
+
+folder = "."
+
+all_files = os.listdir(folder)
+
 docx_files = []
 for file in all_files:
     if file.endswith(".docx"):
         docx_files.append(file)
-#Not explaining anything yet because this is almost similiar to the pdf and image codes
-for docx in docx_files:
-    filepath = os.path.join(folder, docx) 
-doc = Document(filepath)
-core_props = doc.core_properties 
- if core_props.author:
-        author = core_props.author
-    else:
-        author = "Unknown"
+
+with open("word_output.csv", "w", newline="") as csv_file:
+    writer = csv.writer(csv_file)
+    writer.writerow(["Filename", "Author", "Title", "Created"])
     
-    if core_props.title:
-        title = core_props.title
-    else:
-        title = "Unknown"
-    
-    if core_props.created:
-        created = core_props.created
-    else:
-        created = "Unknown"
-    
-    print("File:", docx)
-    print("  Author:", author)
-    print("  Title:", title)
-    print("  Created:", created)
-    print("-" * 30) 
+    for docx in docx_files:
+        filepath = os.path.join(folder, docx)
+        
+        doc = Document(filepath)
+        core_props = doc.core_properties
+        
+        if core_props.author:
+            author = core_props.author
+        else:
+            author = "Unknown"
+        
+        if core_props.title:
+            title = core_props.title
+        else:
+            title = "Unknown"
+        
+        if core_props.created:
+            created = core_props.created
+        else:
+            created = "Unknown"
+        
+        writer.writerow([docx, author, title, created])
+        print(f"Added: {docx}")
 
-
-
-
-
+print("\n✅ Done! Results saved to word_output.csv")
